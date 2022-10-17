@@ -3,7 +3,7 @@ A lightweight Eksi API.
 
 ## Informations
 - Project works with .NET 5.0 but if you want, you can change it to other frameworks like .NET Standard or .NET Core.
-- It based on http crawling. So, if page struct change, it can unusable for a while.
+- It based on HTTP crawling. So, if page struct change, it can unusable for a while.
 
 ## Basics
 
@@ -12,13 +12,14 @@ First of all, we have to create services to retrieve data.
 ```
 var threadService = new ThreadService();
 var entryService = new EntryService();
+var userService = new UserService();
 ```
 
 ### Entry Service
 
 #### Searching
 
-To search in entries, you can use Search() function. It returns IEnumerable<Entry> and takes an object that contains entry id.
+To search in entries, you can use Search() function. It returns IEnumerable<Entry> and takes a parameter that contains entry id.
 
 ```
 var entries = entryService.Search("53401889");
@@ -34,7 +35,7 @@ var debes = entryService.GetDEBE();
 
 #### Getting Entries From Specified URL
 
-To retrieve entries from thread page, you can use GetEntriesFromPage() function. It returns IEnumerable<Entry> and takes link of the page.
+To retrieve entries from thread page, you can use GetEntriesFromPage() function. It returns IEnumerable<Entry> and takes the URL of the page.
 
 ```
 var entries = entryService.GetEntriesFromPage("https://eksisozluk.com/applein-kasasindaki-nakit-203-milyar-dolar--4862121");
@@ -44,7 +45,7 @@ var entries = entryService.GetEntriesFromPage("https://eksisozluk.com/applein-ka
 
 #### Searching
 
-To search in threads, you can use Search() function. It returns IEnumerable<Thread> and takes an object that contains query.
+To search in threads, you can use Search() function. It returns IEnumerable<Thread> and takes a parameter that contains query.
 
 ```
 var threads = threadService.Search("apple'ın kasasındaki nakit 203 milyar dolar");
@@ -67,6 +68,16 @@ Note: Page limit is 5 as default.
 var threads1 = threadService.GetFromTopics(ThreadCategory.POPULAR);
 // or
 var threads2 = threadService.GetFromTopics(ThreadCategory.POPULAR, 3);
+```
+  
+### UserService
+  
+#### Searching
+  
+To search in users, you can use Search() function. It returns a single user and takes a parameter that contains the query.
+
+```
+var user = userService.Search("ssg");
 ```
 
 ## Structure
@@ -99,3 +110,12 @@ var threads2 = threadService.GetFromTopics(ThreadCategory.POPULAR, 3);
 - **String** Title
 - **IEnumerable<Entry>** Entries
 - **DateTime** Date
+  
+### ThreadCategory (Enum)
+
+- POPULAR
+- TODAY (DEPRECATED)
+  
+### EntryCategory (Enum)
+
+- DEBE
