@@ -16,6 +16,9 @@ namespace EksiAPI.Services
         public override Thread Search(object value) =>
             GetThreadFromPage(Search("", value));
 
+        public Thread GetThread(string url) =>
+            GetThreadFromPage(GetHtml(url));
+
         private Thread GetThreadFromPage(HtmlDocument page)
         {
             Thread thread = new();
@@ -51,7 +54,7 @@ namespace EksiAPI.Services
             };
 
             var page = GetHtml(url + 1);
-            int total = int.Parse(page.DocumentNode.SelectSingleNode("//p[@class='topic-list-description']").InnerText.Split(' ')[0]);
+            int total = int.Parse(page.GetElementbyId("partial-index").SelectSingleNode("//div[1]/h2[1]").GetAttributeValue("title", "0").Split(' ')[0]) / 45;
 
             IEnumerable<Thread> threads = GetThreadsFromPage(page);
             if (pageLimit <= total)
@@ -63,13 +66,14 @@ namespace EksiAPI.Services
 
         private static IEnumerable<Thread> GetThreadsFromPage(HtmlDocument doc)
         {
-            var a = doc.DocumentNode.SelectNodes("//ul[@class='topic-list']/li");
+            var a = doc.DocumentNode.SelectNodes("//ul[@class='topic-list partial']/li/a");
             if (a != null)
                 foreach (var x in a)
-                    yield return new Thread
-                    {
-                        URL = x.SelectSingleNode(".//a").GetAttributeValue("href", "")
-                    };
+                    if (!x.InnerHtml.Contains("ad-double-click"))
+                        yield return new Thread
+                        {
+                            URL = x.GetAttributeValue("href", "")
+                        };
         }
     }
 }

@@ -13,6 +13,7 @@ namespace EksiAPI.Entities
         {
             get => "https://eksisozluk.com/" +
             Title.Replace('ğ', 'g')
+            .Replace(' ', '-')
             .Replace('ü', 'u')
             .Replace('ı', 'i')
             .Replace('ş', 's')
@@ -23,7 +24,7 @@ namespace EksiAPI.Entities
                 var s1 = value.Split('?')[0].Split('/');
                 string b = s1[^1];
                 var s2 = b.Split("--");
-                Title = s2[0];
+                Title = s2[0].Replace('-', ' ');
                 ID = int.TryParse(s2[1], out int id) ? id : -1;
             }
         }

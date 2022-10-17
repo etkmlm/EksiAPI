@@ -10,7 +10,10 @@ namespace APITest
     {
         static void Main(string[] args)
         {
-            var f = new EntryService().GetDEBE().ToList();
+            var service = new ThreadService();
+            var f = service.GetFromTopics(ThreadCategory.POPULAR).ToList();
+            var thread = service.GetThread(f[23].URL);
+            //var s = new EntryService().GetDEBE().ToList();
             Console.ReadKey();
         }
     }
