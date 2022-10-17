@@ -13,9 +13,19 @@ namespace EksiAPI.Services
         private const string TODAY = "https://eksisozluk.com/basliklar/bugun/";
         private const string POPULAR = "https://eksisozluk.com/basliklar/gundem?p=";
 
+        /// <summary>
+        /// Search for thread.
+        /// </summary>
+        /// <param name="value">Thread Title.</param>
+        /// <returns>It returns a thread that matches with query. If not exist, returns null.</returns>
         public override Thread Search(object value) =>
             GetThreadFromPage(Search("", value));
 
+        /// <summary>
+        /// Retrieves thread.
+        /// </summary>
+        /// <param name="url">Thread URL.</param>
+        /// <returns>It returns a thread that matches with query. If not exist, returns null.</returns>
         public Thread GetThread(string url) =>
             GetThreadFromPage(GetHtml(url));
 
@@ -41,6 +51,12 @@ namespace EksiAPI.Services
             return thread;
         }
 
+        /// <summary>
+        /// Retrieve threads from topics.
+        /// </summary>
+        /// <param name="category">Thread Category</param>
+        /// <param name="pageLimit">Page Limit</param>
+        /// <returns></returns>
         public IEnumerable<Thread> GetFromTopics(ThreadCategory category, int pageLimit = 5)
         {
             if (pageLimit < 1)
@@ -49,7 +65,6 @@ namespace EksiAPI.Services
             string url = category switch
             {
                 ThreadCategory.POPULAR => POPULAR,
-                ThreadCategory.TODAY => TODAY,
                 _ => null
             };
 

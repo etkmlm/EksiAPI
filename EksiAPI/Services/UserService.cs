@@ -10,6 +10,12 @@ namespace EksiAPI.Services
     public class UserService : Service<User>
     {
         private const string USER = "https://eksisozluk.com/biri/";
+
+        /// <summary>
+        /// Search for user.
+        /// </summary>
+        /// <param name="value">Username.</param>
+        /// <returns>It returns a user that matches with query. If not exist, returns null.</returns>
         public override User Search(object value)
         {
             var page = Search("@", value);
@@ -22,7 +28,7 @@ namespace EksiAPI.Services
             return new()
             {
                 Username = title.InnerText.Trim(),
-                IsNoob = badges.Any(x => x.InnerHtml.Contains("çaylak")),
+                IsNoob = badges?.Any(x => x.InnerHtml.Contains("çaylak")) ?? false,
                 Photo = img.GetAttributeValue("src", ""),
                 EntryCount = Convert.ToInt32(page.GetElementbyId("entry-count-total").InnerText),
                 FollowCount = Convert.ToInt32(page.GetElementbyId("user-following-count").InnerText),

@@ -13,9 +13,19 @@ namespace EksiAPI.Services
         private const string DEBE = "https://eksisozluk.com/debe";
         private const string SEARCH_ENTRY = "https://eksisozluk.com/entry/";
 
+        /// <summary>
+        /// Search for entry.
+        /// </summary>
+        /// <param name="id">Entry ID.</param>
+        /// <returns>It returns an entry that matches with id. If not exist, returns null.</returns>
         public override Entry Search(object id) =>
             GetEntriesFromPage(GetHtml(SEARCH_ENTRY + id)).FirstOrDefault();
 
+        /// <summary>
+        /// Retrieves entris from thread page.
+        /// </summary>
+        /// <param name="url">Thread URL.</param>
+        /// <returns>It returns all threads from the thread page.</returns>
         public IEnumerable<Entry> GetEntriesFromPage(string url) =>
             GetEntriesFromPage(GetHtml(url));
 
@@ -52,6 +62,10 @@ namespace EksiAPI.Services
             }
         }
 
+        /// <summary>
+        /// Retrieves DEBE's.
+        /// </summary>
+        /// <returns>It returns all DEBE's.</returns>
         public IEnumerable<Entry> GetDEBE()
         {
             var page = GetHtml(DEBE);
