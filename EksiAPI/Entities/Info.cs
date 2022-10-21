@@ -9,7 +9,7 @@ namespace EksiAPI.Entities
 
     public enum ThreadCategory
     {
-        POPULAR
+        POPULAR, TODAY
     }
     public enum EntryCategory
     {

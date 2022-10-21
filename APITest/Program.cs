@@ -10,7 +10,7 @@ namespace APITest
     {
         static void Main(string[] args)
         {
-
+            var today = new ThreadService().GetFromTopics(ThreadCategory.TODAY);
             
             Console.ReadKey();
         }

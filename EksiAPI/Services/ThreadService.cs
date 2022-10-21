@@ -65,6 +65,7 @@ namespace EksiAPI.Services
             string url = category switch
             {
                 ThreadCategory.POPULAR => POPULAR,
+                ThreadCategory.TODAY => TODAY,
                 _ => null
             };
 
